@@ -1,0 +1,116 @@
+.card {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-5);
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-base);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle gradient overlay for depth */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: transparent;
+    transition: background var(--transition-base);
+}
+
+.card-clickable {
+    cursor: pointer;
+}
+
+.card-clickable:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+    border-color: var(--color-border-focus);
+}
+
+.card-clickable:active {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Card Accent Colors with Gradient Top Border */
+.card-accent-primary::before {
+    background: linear-gradient(90deg, var(--color-primary-400), var(--color-primary-600));
+}
+
+.card-accent-success::before {
+    background: linear-gradient(90deg, var(--color-success-500), var(--color-accent-500));
+}
+
+.card-accent-warning::before {
+    background: linear-gradient(90deg, var(--color-warning-400), var(--color-warning-600));
+}
+
+.card-accent-danger::before {
+    background: linear-gradient(90deg, var(--color-danger-400), var(--color-danger-600));
+}
+
+/* Accent background tinting */
+.card-accent-primary {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.03) 0%, var(--glass-bg) 100%);
+}
+
+.card-accent-success {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.03) 0%, var(--glass-bg) 100%);
+}
+
+.card-accent-warning {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.03) 0%, var(--glass-bg) 100%);
+}
+
+.card-accent-danger {
+    background: linear-gradient(135deg, rgba(244, 63, 94, 0.03) 0%, var(--glass-bg) 100%);
+}
+
+/* Card Header */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--space-4);
+}
+
+.card-header-text {
+    flex: 1;
+}
+
+.card-title {
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    color: var(--color-text-primary);
+    margin: 0;
+    letter-spacing: -0.01em;
+}
+
+.card-subtitle {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin: var(--space-1) 0 0 0;
+}
+
+.card-header-action {
+    margin-left: var(--space-3);
+}
+
+/* Card Body */
+.card-body {
+    /* Content styling */
+}
+
+/* Desktop adjustments */
+@media (min-width: 768px) {
+    .card {
+        padding: var(--space-6);
+        border-radius: var(--radius-2xl);
+    }
+}

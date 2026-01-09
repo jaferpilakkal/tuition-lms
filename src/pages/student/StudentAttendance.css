@@ -1,0 +1,129 @@
+.student-attendance {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Stats Card */
+.attendance-stats-card {
+    margin-bottom: var(--space-6);
+}
+
+.stats-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--space-4);
+}
+
+.stats-percentage {
+    display: flex;
+    flex-direction: column;
+}
+
+.percentage-number {
+    font-size: var(--text-4xl);
+    font-weight: var(--font-bold);
+    color: var(--color-text-primary);
+    line-height: 1;
+}
+
+.percentage-label {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin-top: var(--space-1);
+}
+
+.stats-detail {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    text-align: right;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+}
+
+.icon-success {
+    color: var(--color-success-600);
+}
+
+.icon-danger {
+    color: var(--color-danger-600);
+}
+
+.stats-subtext {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin: var(--space-3) 0 0 0;
+    text-align: center;
+}
+
+/* Attendance History */
+.attendance-history {
+    margin-top: var(--space-6);
+}
+
+.section-title {
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    color: var(--color-text-primary);
+    margin: 0 0 var(--space-4) 0;
+}
+
+.attendance-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.attendance-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-3) var(--space-4);
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+}
+
+.attendance-info {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.attendance-icon {
+    color: var(--color-primary-500);
+    flex-shrink: 0;
+}
+
+.attendance-date {
+    font-weight: var(--font-medium);
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.attendance-class {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+/* Desktop adjustments */
+@media (min-width: 768px) {
+    .stats-header {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .stats-detail {
+        flex-direction: row;
+        gap: var(--space-6);
+    }
+}

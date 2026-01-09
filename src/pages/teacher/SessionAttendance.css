@@ -1,0 +1,176 @@
+.session-attendance {
+    max-width: 700px;
+    margin: 0 auto;
+    padding-bottom: 100px;
+}
+
+/* Session Info Card */
+.session-info-card {
+    margin-bottom: var(--space-4);
+}
+
+.session-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.session-title {
+    font-size: var(--text-xl);
+    font-weight: var(--font-bold);
+    color: var(--color-text-primary);
+    margin: 0 0 var(--space-1) 0;
+}
+
+.session-class-name {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    margin: 0 0 var(--space-2) 0;
+}
+
+.session-date {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin: 0;
+}
+
+/* Quick Actions */
+.quick-actions {
+    display: flex;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+    flex-wrap: wrap;
+}
+
+/* Stats */
+.attendance-stats {
+    display: flex;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+}
+
+.stat-item {
+    flex: 1;
+    padding: var(--space-3);
+    border-radius: var(--radius-lg);
+    text-align: center;
+}
+
+.stat-present {
+    background-color: var(--color-success-50);
+    border: 1px solid var(--color-success-200);
+}
+
+.stat-absent {
+    background-color: var(--color-danger-50);
+    border: 1px solid var(--color-danger-200);
+}
+
+.stat-total {
+    background-color: var(--color-gray-50);
+    border: 1px solid var(--color-gray-200);
+}
+
+.stat-number {
+    display: block;
+    font-size: var(--text-2xl);
+    font-weight: var(--font-bold);
+    color: var(--color-text-primary);
+}
+
+.stat-label {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+}
+
+/* Student List */
+.student-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.student-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-4);
+    background-color: var(--color-bg-secondary);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.student-item:hover {
+    border-color: var(--color-primary-300);
+}
+
+.student-item.Present {
+    background-color: var(--color-success-50);
+    border-color: var(--color-success-400);
+}
+
+.student-item.Absent {
+    background-color: var(--color-danger-50);
+    border-color: var(--color-danger-400);
+}
+
+.student-info {
+    flex: 1;
+}
+
+.student-name {
+    font-weight: var(--font-medium);
+    color: var(--color-text-primary);
+    margin: 0 0 var(--space-1) 0;
+}
+
+.student-email {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+/* Attendance Toggle */
+.attendance-toggle {
+    flex-shrink: 0;
+}
+
+.status-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.status-icon.present {
+    color: var(--color-success-600);
+}
+
+.status-icon.absent {
+    color: var(--color-danger-600);
+}
+
+.status-icon.unmarked {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+}
+
+/* Save Container */
+.save-container {
+    position: fixed;
+    bottom: 80px;
+    left: 0;
+    right: 0;
+    padding: var(--space-4);
+    background: linear-gradient(to top, white 80%, transparent);
+    z-index: 100;
+}
+
+@media (min-width: 769px) {
+    .save-container {
+        bottom: 0;
+        left: 240px;
+        padding: var(--space-4) var(--space-6);
+    }
+}

@@ -1,0 +1,168 @@
+.teacher-dashboard {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.dashboard-grid {
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Today's Classes with Modern Styling */
+.today-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.today-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4);
+    background: linear-gradient(135deg, var(--color-gray-50), var(--color-bg-secondary));
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    transition: all var(--transition-base);
+}
+
+.today-item:hover {
+    transform: translateX(4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-primary-200);
+}
+
+.today-info {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+.today-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, var(--color-primary-100), var(--color-primary-50));
+    color: var(--color-primary-600);
+    border-radius: var(--radius-lg);
+}
+
+.today-class-name {
+    font-weight: var(--font-semibold);
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.today-time {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+/* Pending Actions with Gradient Icons */
+.pending-grid {
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.pending-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--space-5);
+    background: linear-gradient(135deg, var(--color-gray-50), var(--color-bg-secondary));
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    transition: all var(--transition-base);
+}
+
+.pending-item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.pending-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-xl);
+    margin-bottom: var(--space-4);
+}
+
+.pending-icon-attendance {
+    background: linear-gradient(135deg, var(--color-warning-100), var(--color-warning-50));
+    color: var(--color-warning-600);
+}
+
+.pending-icon-tasks {
+    background: linear-gradient(135deg, var(--color-primary-100), var(--color-primary-50));
+    color: var(--color-primary-600);
+}
+
+.pending-details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.pending-count {
+    font-size: var(--text-3xl);
+    font-weight: var(--font-bold);
+    background: linear-gradient(135deg, var(--color-primary-600), var(--color-accent-500));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.pending-label {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    font-weight: var(--font-medium);
+}
+
+/* Class Progress */
+.progress-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.progress-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-3);
+    background: var(--color-gray-50);
+    border-radius: var(--radius-lg);
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.progress-class-name {
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--color-text-primary);
+}
+
+.progress-count {
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--color-primary-600);
+}

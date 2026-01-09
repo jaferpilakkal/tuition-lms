@@ -1,0 +1,86 @@
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-semibold);
+    border-radius: var(--radius-full);
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+    transition: all var(--transition-fast);
+}
+
+/* Badge Sizes */
+.badge-small {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.6rem;
+}
+
+.badge-medium {
+    font-size: var(--text-xs);
+    padding: 0.3rem 0.85rem;
+}
+
+.badge-large {
+    font-size: var(--text-sm);
+    padding: 0.4rem 1rem;
+}
+
+/* Badge Variants with Gradient Backgrounds */
+.badge-primary {
+    background: linear-gradient(135deg, var(--color-primary-100), var(--color-primary-50));
+    color: var(--color-primary-700);
+    border: 1px solid var(--color-primary-200);
+}
+
+.badge-success {
+    background: linear-gradient(135deg, var(--color-success-100), var(--color-success-50));
+    color: var(--color-success-700);
+    border: 1px solid var(--color-success-200);
+}
+
+.badge-warning {
+    background: linear-gradient(135deg, var(--color-warning-100), var(--color-warning-50));
+    color: var(--color-warning-700);
+    border: 1px solid var(--color-warning-200);
+}
+
+.badge-danger {
+    background: linear-gradient(135deg, var(--color-danger-100), var(--color-danger-50));
+    color: var(--color-danger-700);
+    border: 1px solid var(--color-danger-200);
+}
+
+.badge-neutral {
+    background: linear-gradient(135deg, var(--color-gray-100), var(--color-gray-50));
+    color: var(--color-gray-700);
+    border: 1px solid var(--color-gray-200);
+}
+
+/* Badge Solid Variants */
+.badge-primary-solid {
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-600));
+    color: white;
+    border: none;
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.25);
+}
+
+.badge-success-solid {
+    background: linear-gradient(135deg, var(--color-success-500), var(--color-success-600));
+    color: white;
+    border: none;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
+}
+
+.badge-warning-solid {
+    background: linear-gradient(135deg, var(--color-warning-500), var(--color-warning-600));
+    color: white;
+    border: none;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.25);
+}
+
+.badge-danger-solid {
+    background: linear-gradient(135deg, var(--color-danger-500), var(--color-danger-600));
+    color: white;
+    border: none;
+    box-shadow: 0 2px 8px rgba(244, 63, 94, 0.25);
+}
