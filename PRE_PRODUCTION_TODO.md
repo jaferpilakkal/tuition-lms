@@ -1,46 +1,31 @@
 # Pre-Production Checklist
 
-Items to address before going to production. None are blocking for MVP deployment.
+Items to address before going to production.
 
 ---
 
-## 1. Remove Debug Console Logs
+## ✅ COMPLETED
 
-**Location:** `src/context/AuthContext.jsx`
+### 1. Remove Debug Console Logs ✅
+**Status:** DONE (2026-01-12)
 
-**Issue:** The AuthContext contains multiple `console.log` statements used during development for debugging authentication flow. These should be removed in production to:
-- Keep browser console clean for users
-- Avoid exposing internal auth state information
-- Slightly improve performance
+Removed all 15 debug `console.log` statements from `src/context/AuthContext.jsx`.
+Kept only `console.error` calls for error tracking.
 
-**Lines to remove or comment out:**
-```javascript
-// Line 13: console.log('[Auth] Fetching profile for user:', userId);
-// Line 22: console.log('[Auth] Profile query complete. Data:', data, 'Error:', error);
-// Line 29: console.log('[Auth] Profile fetched successfully:', data);
-// Line 42: console.log('[Auth] Initializing auth...');
-// Line 45: console.log('[Auth] Session check complete:', session ? 'exists' : 'none');
-// Line 58: console.log('[Auth] Setting loading to false');
-// Line 69: console.log('[Auth] Auth state changed:', event);
-// Line 91: console.log('[Auth] Login attempt for:', email);
-// Line 95: console.log('[Auth] Calling Supabase signInWithPassword...');
-// Line 106: console.log('[Auth] Supabase auth successful, user:', data.user?.id);
-// Line 110: console.log('[Auth] Now fetching profile...');
-// Line 113: console.log('[Auth] Profile result:', userProfile);
-// Line 116: console.log('[Auth] Profile not found!');
-// Line 121: console.log('[Auth] User is deactivated');
-// Line 126: console.log('[Auth] Login complete, role:', userProfile.role);
-// Line 140: console.log('[Auth] Logging out...');
-// Line 147: console.log('[Auth] Logged out successfully');
-```
+### 2. Replace Native confirm() Dialogs ✅
+**Status:** DONE (2026-01-12)
 
-**Fix:** Either:
-- Remove all console.log lines
-- Or replace with a proper logging library (e.g., `loglevel`) that can be disabled in production
+- Created `ConfirmModal` component (`src/components/common/ConfirmModal.jsx`)
+- Updated `AdminClasses.jsx` - uses ConfirmModal for class deactivation
+- Updated `ClassStudents.jsx` - uses ConfirmModal for student removal
 
 ---
 
-## 2. Add Unit/Integration Tests
+## 🟡 NON-CRITICAL (Future Improvements)
+
+### 3. Add Unit/Integration Tests
+
+**Priority:** Medium | **Effort:** 2-4 hrs | **Impact:** Reliability
 
 **Issue:** No automated tests exist. While acceptable for MVP, tests should be added before scaling.
 
@@ -49,59 +34,138 @@ Items to address before going to production. None are blocking for MVP deploymen
 - **React Testing Library** - Component testing
 - **MSW (Mock Service Worker)** - API mocking
 
+**Setup Commands:**
+```bash
+npm install -D vitest @testing-library/react @testing-library/jest-dom jsdom
+```
+
 **Priority Test Coverage:**
 1. `AuthContext` - Login/logout flows
 2. `ProtectedRoute` - Role-based access
 3. Key pages - Dashboard data loading
 4. Form submissions - Task submission, attendance marking
 
-**Setup Commands:**
-```bash
-npm install -D vitest @testing-library/react @testing-library/jest-dom jsdom
-```
+---
 
-**Example test file structure:**
-```
-src/
-├── __tests__/
-│   ├── context/
-│   │   └── AuthContext.test.jsx
-│   ├── components/
-│   │   └── ProtectedRoute.test.jsx
-│   └── pages/
-│       └── Login.test.jsx
+### 4. Add Error Logging Service
+
+**Priority:** Medium | **Effort:** 1-2 hrs | **Impact:** Debugging in production
+
+**Issue:** Console.error logs are only visible in browser console. In production, you won't see user errors.
+
+**Recommended Services:**
+- **Sentry** - Error tracking with stack traces
+- **LogRocket** - Session replay + error tracking
+- **Vercel Analytics** - Built-in if using Vercel
+
+**Implementation:**
+```bash
+npm install @sentry/react
 ```
 
 ---
 
-## 3. File Upload Implementation (Future Feature)
+### 5. Form Validation Enhancement
+
+**Priority:** Low | **Effort:** 2-3 hrs | **Impact:** UX
+
+**Current State:** Forms use basic HTML validation (`required` attribute).
+
+**Improvements:**
+- Add client-side validation messages
+- Email format validation
+- URL format validation for live links
+- Date validation (no past dates for new sessions)
+
+**Options:**
+- React Hook Form + Zod
+- Formik + Yup
+- Custom validation functions
+
+---
+
+### 6. File Upload Implementation
+
+**Priority:** Low | **Effort:** 4-6 hrs | **Impact:** Feature
 
 **Current State:** The `task_submissions` table has a `file_url` column but Supabase Storage is not configured.
 
 **To Implement:**
-1. Create Supabase Storage bucket
-2. Add RLS policies for storage
+1. Create Supabase Storage bucket called `submissions`
+2. Add RLS policies for storage:
+   - Students can upload to their own folder
+   - Teachers can read student uploads
 3. Update `TaskSubmission.jsx` with file upload UI
-4. Handle file upload to Supabase Storage
+4. Add file type/size validation
+5. Handle file upload to Supabase Storage
 
 ---
 
-## 4. Profile Page
+### 7. Profile Page Implementation
+
+**Priority:** Low | **Effort:** 2-3 hrs | **Impact:** Feature
 
 **Current State:** Shows "Coming Soon" placeholder at `/profile` route.
 
 **To Implement:**
-- User profile view/edit
-- Password change
-- Profile picture upload
+- User profile view
+- Name editing
+- Password change functionality
+- Profile picture upload (requires Supabase Storage)
 
 ---
 
-## Priority Order
+### 8. Rate Limiting Awareness
 
-| Item | Priority | Effort | Impact |
-|------|----------|--------|--------|
-| Remove console logs | High | 10 min | Security/Clean |
-| Add basic tests | Medium | 2-4 hrs | Reliability |
-| File uploads | Low | 4-6 hrs | Feature |
-| Profile page | Low | 2-3 hrs | Feature |
+**Priority:** Low | **Effort:** 1 hr | **Impact:** Security
+
+**Issue:** No client-side rate limiting awareness for failed login attempts.
+
+**Improvements:**
+- Track failed login attempts
+- Show warning after 3 failed attempts
+- Implement exponential backoff on retries
+- Consider CAPTCHA after multiple failures
+
+---
+
+### 9. Accessibility (a11y) Improvements
+
+**Priority:** Low | **Effort:** 3-4 hrs | **Impact:** Inclusivity
+
+**Improvements:**
+- Add `aria-labels` to icon-only buttons
+- Ensure proper focus management in modals
+- Add keyboard navigation support
+- Test with screen readers
+- Add skip-to-content link
+
+---
+
+### 10. Performance Optimizations
+
+**Priority:** Low | **Effort:** 2-3 hrs | **Impact:** Speed
+
+**Improvements:**
+- Lazy load routes with `React.lazy()`
+- Add image optimization
+- Implement data caching strategy
+- Add pagination for large lists (students, sessions)
+- Use `useMemo` / `useCallback` where beneficial
+
+---
+
+## Priority Summary
+
+| Item | Priority | Status |
+|------|----------|--------|
+| Remove debug logs | Critical | ✅ DONE |
+| Replace confirm() dialogs | Critical | ✅ DONE |
+| Add tests | Medium | 🟡 TODO |
+| Error logging service | Medium | 🟡 TODO |
+| Form validation | Low | 🟡 TODO |
+| File uploads | Low | 🟡 TODO |
+| Profile page | Low | 🟡 TODO |
+| Rate limiting | Low | 🟡 TODO |
+| Accessibility | Low | 🟡 TODO |
+| Performance | Low | 🟡 TODO |
