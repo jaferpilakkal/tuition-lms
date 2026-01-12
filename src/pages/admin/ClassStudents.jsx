@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Card, Badge, Button, LoadingSpinner, EmptyState } from '../../components/common';
+import { Card, Badge, Button, LoadingSpinner, EmptyState, ConfirmModal } from '../../components/common';
 import { useAuth } from '../../context/AuthContext';
 import { supabase } from '../../services/supabase';
 import { ArrowLeft, Plus, UserMinus, Search } from 'lucide-react';
@@ -19,6 +19,7 @@ function ClassStudents() {
     const [showAddModal, setShowAddModal] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [adding, setAdding] = useState(false);
+    const [studentToRemove, setStudentToRemove] = useState(null);
 
     useEffect(() => {
         fetchData();
@@ -110,14 +111,14 @@ function ClassStudents() {
         }
     };
 
-    const removeStudent = async (enrollmentId) => {
-        if (!confirm('Remove this student from the class?')) return;
+    const removeStudent = async () => {
+        if (!studentToRemove) return;
 
         try {
             const { error } = await supabase
                 .from('class_enrollments')
                 .update({ is_active: false })
-                .eq('id', enrollmentId);
+                .eq('id', studentToRemove);
 
             if (error) throw error;
 
@@ -198,7 +199,7 @@ function ClassStudents() {
                                 <Button
                                     variant="ghost"
                                     size="small"
-                                    onClick={() => removeStudent(enrollment.id)}
+                                    onClick={() => setStudentToRemove(enrollment.id)}
                                 >
                                     <UserMinus size={16} />
                                 </Button>
@@ -255,6 +256,17 @@ function ClassStudents() {
                     </div>
                 </div>
             )}
+
+            {/* Remove Student Confirmation Modal */}
+            <ConfirmModal
+                isOpen={!!studentToRemove}
+                onClose={() => setStudentToRemove(null)}
+                onConfirm={removeStudent}
+                title="Remove Student"
+                message="Are you sure you want to remove this student from the class?"
+                confirmText="Remove"
+                variant="danger"
+            />
         </div>
     );
 }

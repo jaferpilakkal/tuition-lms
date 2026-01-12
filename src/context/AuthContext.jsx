@@ -8,10 +8,8 @@ export function AuthProvider({ children }) {
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // Fetch user profile from profiles table - simplified version
+    // Fetch user profile from profiles table
     const fetchProfile = async (userId) => {
-        console.log('[Auth] Fetching profile for user:', userId);
-
         try {
             const { data, error } = await supabase
                 .from('profiles')
@@ -19,14 +17,11 @@ export function AuthProvider({ children }) {
                 .eq('id', userId)
                 .single();
 
-            console.log('[Auth] Profile query complete. Data:', data, 'Error:', error);
-
             if (error) {
                 console.error('[Auth] Error fetching profile:', error);
                 return null;
             }
 
-            console.log('[Auth] Profile fetched successfully:', data);
             return data;
         } catch (error) {
             console.error('[Auth] Exception fetching profile:', error);
@@ -39,10 +34,8 @@ export function AuthProvider({ children }) {
 
         // Get initial session
         const initializeAuth = async () => {
-            console.log('[Auth] Initializing auth...');
             try {
                 const { data: { session } } = await supabase.auth.getSession();
-                console.log('[Auth] Session check complete:', session ? 'exists' : 'none');
 
                 if (session?.user && isMounted) {
                     setUser(session.user);
@@ -55,7 +48,6 @@ export function AuthProvider({ children }) {
                 console.error('[Auth] Auth initialization error:', error);
             } finally {
                 if (isMounted) {
-                    console.log('[Auth] Setting loading to false');
                     setLoading(false);
                 }
             }
@@ -66,8 +58,6 @@ export function AuthProvider({ children }) {
         // Listen for auth changes
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
             async (event, session) => {
-                console.log('[Auth] Auth state changed:', event);
-
                 if (!isMounted) return;
 
                 if (event === 'SIGNED_IN' && session?.user) {
@@ -88,11 +78,9 @@ export function AuthProvider({ children }) {
 
     // Login function with better error handling
     const login = async (email, password) => {
-        console.log('[Auth] Login attempt for:', email);
         setLoading(true);
 
         try {
-            console.log('[Auth] Calling Supabase signInWithPassword...');
             const { data, error } = await supabase.auth.signInWithPassword({
                 email,
                 password,
@@ -103,14 +91,10 @@ export function AuthProvider({ children }) {
                 throw error;
             }
 
-            console.log('[Auth] Supabase auth successful, user:', data.user?.id);
-
             if (data.user) {
                 setUser(data.user);
-                console.log('[Auth] Now fetching profile...');
 
                 const userProfile = await fetchProfile(data.user.id);
-                console.log('[Auth] Profile result:', userProfile);
 
                 if (!userProfile) {
                     console.error('[Auth] Profile not found!');
@@ -123,7 +107,6 @@ export function AuthProvider({ children }) {
                     throw new Error('Your account has been deactivated. Please contact admin.');
                 }
 
-                console.log('[Auth] Login complete, role:', userProfile.role);
                 setProfile(userProfile);
                 setLoading(false);
                 return { user: data.user, profile: userProfile };
@@ -137,14 +120,12 @@ export function AuthProvider({ children }) {
 
     // Logout function
     const logout = async () => {
-        console.log('[Auth] Logging out...');
         try {
             const { error } = await supabase.auth.signOut();
             if (error) throw error;
 
             setUser(null);
             setProfile(null);
-            console.log('[Auth] Logged out successfully');
         } catch (error) {
             console.error('[Auth] Logout error:', error);
             throw error;

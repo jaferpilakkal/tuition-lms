@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, Badge, Button, LoadingSpinner, EmptyState } from '../../components/common';
+import { Card, Badge, Button, LoadingSpinner, EmptyState, ConfirmModal } from '../../components/common';
 import { useAuth } from '../../context/AuthContext';
 import { supabase } from '../../services/supabase';
 import { Plus, Edit2, Users, Calendar, Trash2 } from 'lucide-react';
@@ -15,6 +15,7 @@ function AdminClasses() {
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
     const [editingClass, setEditingClass] = useState(null);
+    const [classToDelete, setClassToDelete] = useState(null);
 
     // Form state
     const [formData, setFormData] = useState({
@@ -139,14 +140,14 @@ function AdminClasses() {
         }
     };
 
-    const handleDelete = async (classId) => {
-        if (!confirm('Are you sure you want to deactivate this class?')) return;
+    const handleDelete = async () => {
+        if (!classToDelete) return;
 
         try {
             const { error } = await supabase
                 .from('classes')
                 .update({ is_active: false })
-                .eq('id', classId);
+                .eq('id', classToDelete);
 
             if (error) throw error;
             toast.success('Class deactivated');
@@ -308,6 +309,17 @@ function AdminClasses() {
                     </div>
                 </div>
             )}
+
+            {/* Delete Confirmation Modal */}
+            <ConfirmModal
+                isOpen={!!classToDelete}
+                onClose={() => setClassToDelete(null)}
+                onConfirm={handleDelete}
+                title="Deactivate Class"
+                message="Are you sure you want to deactivate this class? Students will no longer see it."
+                confirmText="Deactivate"
+                variant="danger"
+            />
         </div>
     );
 }
